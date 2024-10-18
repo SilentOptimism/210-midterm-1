@@ -179,40 +179,47 @@ public:
         }
     }
     
+    /// @brief Removes the node at the head the front of the list
     void pop_front() {
 
+        // Checks if the list is empty
         if (!head) {
             cout << "List is empty." << endl;
-            return;
+            return; // Exits if empty as the list is already cleared
         }
 
+        // Creates a temporary node ptr to head so that node can be deleted after the head is redirected
         Node * temp = head;
 
+        // Checks if their is only 1 node
         if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+            head = head->next; // When there is not 1 node it moves head to the next node
+            head->prev = nullptr; // Sets head previous ptr to a nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // If the list does have just 1 node it will set both head and tail to be nullptrs
+        delete temp; // deletes our temporary node that head used to point to
     }
 
     void pop_back() {
+        // Checks if the list is empty
         if (!tail) {
             cout << "List is empty." << endl;
-            return;
+            return; // Exits if the list is empty: nothing to delete
         }
-        Node * temp = tail;
+        Node * temp = tail; // Creates a temp ptr to the tail so it can delete the node tail is at after tail is redirected
 
+        // Checks if there is only 1 node in the list
         if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+            tail = tail->prev; // If there isn't just 1 node it will move tail back 1 node
+            tail->next = nullptr; // It will make the node that tail not points to no longer point the formerly tail node by changing its next ptr to a nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // if there is only 1 node in the list it will set both tail/head to nullptr to clean the list
+        delete temp; // Deletes the temp node as tail has been redirected
     }
 
+    /// @brief Our DoublyLinkedList deconstructor which clears out our list clearing out the heap
     ~DoublyLinkedList() {
         while (head) {
             Node* temp = head;
@@ -220,14 +227,21 @@ public:
             delete temp;
         }
     }
+
+    /// @brief Prints out our linked list
     void print() {
+        // Sets a current node ptr to head to iterate through the list
         Node* current = head;
+
+        // Checks if the list is empty
         if (!current) {
             cout << "List is empty." << endl;
-            return;
+            return; // Exits if it is
         }
+
+        // Iterates through the list while checking if current points to a nullptr (end of list)
         while (current) {
-            cout << current->data << " ";
+            cout << current->data << " "; // Prints out data while iterating
             current = current->next;
         }
         cout << endl;
