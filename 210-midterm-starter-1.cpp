@@ -20,32 +20,44 @@ private:
     Node* tail;
 
 public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    DoublyLinkedList() { head = nullptr; tail = nullptr; } // A constructor for our doublyLinked list: Sets Head/Tail nodes to nullptr so we know its empty and to avoid floating ptrs
 
     void insert_after(int value, int position) {
+
+        // User validation: Checks if the position isn't negative as you can't have a negative position for a Singularly linked list
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
 
+        // Creates a new node on the heap so to be added to the linked list
         Node* newNode = new Node(value);
+
+        // Checks if the list is empty
         if (!head) {
-            head = tail = newNode;
-            return;
+            head = tail = newNode; // if empty it will point the head and tail to the new node establishing the list 
+            return; // Exits insert_after as the task is completed
         }
 
+        // Creates a temporary node and points it to the head so that we can iterate through the list with out moving the head ptr
         Node* temp = head;
-        for (int i = 0; i < position && temp; ++i)
-            temp = temp->next;
 
+        // Iterates through postion/temp and checks if we are at the correct position of the temp node has reached the end of the list
+        for (int i = 0; i < position && temp; ++i)
+            temp = temp->next; // Iterates temp
+
+        // Checks if temp points to a nullptr to see if the position was out of bounds
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
-            return;
+            delete newNode; // Deletes the node as we have allocated it to the heap and it would remain there if we didn't deallocated it
+            return; // Exits the program
         }
 
+        // Sets the New nodes next ptr to the next ptr of the current node at the position where we want to insert the node
         newNode->next = temp->next;
+        // Sets the newNode to the node at our position next
         newNode->prev = temp;
+
         if (temp->next)
             temp->next->prev = newNode;
         else
