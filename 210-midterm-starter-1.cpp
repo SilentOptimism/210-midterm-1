@@ -7,8 +7,8 @@ class DoublyLinkedList {
 private:
     struct Node {
         int data;
-        Node* prev; 
-        Node* next;
+        Node* prev; // A ptr pointing to the next node
+        Node* next; // A ptr pointing to the previous node
 
         /// @brief Node constructor takes the data and constructs the node
         /// @param val the nodes data
@@ -107,6 +107,8 @@ public:
         delete temp; // Deletes the temp node which has the data we are trying to remove
     }
 
+    /// @brief Deletes a node at the given position
+    /// @param pos The position where the node will be deleted
     void delete_pos(int pos) {
         // Checks if the list is empty and exits if it is
         if (!head) {
@@ -240,10 +242,11 @@ public:
 
     /// @brief Our DoublyLinkedList deconstructor which clears out our list clearing out the heap
     ~DoublyLinkedList() {
+        // Runs until head is at the end of the list pointing to a nullptr
         while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+            Node* temp = head; // creates a temp node where our head is so that head can be iterated and then temp deleted
+            head = head->next; // Iterates head to the next node
+            delete temp; // Deletes the node head formerly pointed to
         }
     }
 
