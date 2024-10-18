@@ -9,6 +9,11 @@ private:
         int data;
         Node* prev;
         Node* next;
+
+        /// @brief Node constructor takes the data and constructs the node
+        /// @param val the nodes data
+        /// @param p the previous ptr (automatically set to nullptr)
+        /// @param n 
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
@@ -16,12 +21,16 @@ private:
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head; // The start of the list
+    Node* tail; // The end of the list
 
 public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; } // A constructor for our doublyLinked list: Sets Head/Tail nodes to nullptr so we know its empty and to avoid floating ptrs
+    /// @brief creates the list with head/tail pointing to a nullptr indicating its empty
+    DoublyLinkedList() { head = nullptr; tail = nullptr; } 
 
+    /// @brief Inserts a node with the given value after the given position
+    /// @param value The value node will contain as its data
+    /// @param position The new node is inserted after this position
     void insert_after(int value, int position) {
 
         // User validation: Checks if the position isn't negative as you can't have a negative position for a Singularly linked list
@@ -66,6 +75,8 @@ public:
         temp->next = newNode; // Sets the previous node next ptr to our new node reconnecting our list from the left
     }
 
+    /// @brief Searches for a node containing the given value and deletes it
+    /// @param value the data to be removed from the node
     void delete_val(int value) {
         // Checks if list is empty if it is returns immediately
         if (!head) return;
@@ -128,19 +139,25 @@ public:
         // This will cause the for loop to end with out temp being checked to be past the end of the list which it is so we do that test here 
         if (!temp) {
             cout << "Position doesn't exist." << endl;
-            return;
+            return; // exits 
         }
 
-
+        // Checks if we are before the end of the list
         if (!temp->next) {
-            pop_back();
-            return;
+            pop_back(); // If we are simply popsback the end node
+            return; // exits
         }
     
-        Node* tempPrev = temp->prev;
+        // Creates a tempPrev ptr point to the node before temp
+        Node* tempPrev = temp->prev; 
+
+        // Sets the node (before temp) next ptr to point to temps next node the node after temp
         tempPrev->next = temp->next;
+
+        // Sets node (after temp) previous ptr to point to the node before temp
         temp->next->prev = tempPrev;
-        delete temp;
+
+        delete temp; // Deletes the node at temp as all nodes around it have been redirected
     }
 
     /// @brief puts a new node containing our data v to the end of the list
@@ -201,6 +218,7 @@ public:
         delete temp; // deletes our temporary node that head used to point to
     }
 
+    /// @brief Removes node at the tail of the list the back
     void pop_back() {
         // Checks if the list is empty
         if (!tail) {
@@ -239,23 +257,29 @@ public:
             return; // Exits if it is
         }
 
-        // Iterates through the list while checking if current points to a nullptr (end of list)
+        // Iterates through printing the list while current points to a nullptr (end of list)
         while (current) {
             cout << current->data << " "; // Prints out data while iterating
-            current = current->next;
+            current = current->next; // Iterates our current ptr thorough the list
         }
-        cout << endl;
+        cout << endl; 
     }
 
+    /// @brief Prints the linked list reversed
     void print_reverse() {
+        // Creates a current node ptr pointing to tail to iterate through the linked list
         Node* current = tail;
+
+        // Checks if current is empty
         if (!current) { 
             cout << "List is empty." << endl;
-            return;
+            return; // If it is exit the list: Nothing to print
         }
+
+        // Checks if current is at the begining of the list
         while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+            cout << current->data << " "; // if not print the data inside current
+            current = current->prev; // Iterate current to previous node
         }
         cout << endl;
     }
