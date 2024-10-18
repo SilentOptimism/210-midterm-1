@@ -144,29 +144,38 @@ public:
     }
 
     /// @brief puts a new node containing our data v to the end of the list
-    /// @param v the data to be put in the node
+    /// @param v the data to be put in the new node
     void push_back(int v) {
         Node* newNode = new Node(v); // Creates our new node with our v data in it
 
-        // Checks if the list is empty
         // You could also do this test with the head if you wanted as they both will return nullptr if the list is empty
+        // Checks if the list is empty by checking it tail is a nullptr
         if (!tail)
             head = tail = newNode; // If the list is empty it will set the tail/head to point to our new node
+        
+        // Runs when the list is not empty
         else {
-            tail->next = newNode; // When the list is not empty it will set the tail's next ptr ot h
-            newNode->prev = tail;
-            tail = newNode;
+            tail->next = newNode; // sets the tail's next ptr ot h
+            newNode->prev = tail; // sets our new node previous ptr to our tail connecting our list
+            tail = newNode; // Moves the tail to the new node to keep it up to date
         }
     }
     
+    /// @brief Adds a new node to the front/head of our list containing the given data v
+    /// @param v The data to be put in the new node
     void push_front(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // Creates our new node with the given data
+
+        // You can also do this test with the tail ptr as they both return nullptr when the list is empty
+        // Checks if the list is empty by checking if head points to a nullptr
         if (!head)
-            head = tail = newNode;
+            head = tail = newNode; // If empty establishes the list with both the tail and head pointing at our new node
+        
+        // Runs when the list is not empty
         else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+            newNode->next = head; // sets the newNode next ptr to the head
+            head->prev = newNode; // sets the redirects the node the head is currently pointing to so that its previous ptr points at the new node
+            head = newNode; // Moves the head left to the new node to keep it current pointing to the zeroth node 
         }
     }
     
