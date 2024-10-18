@@ -82,44 +82,56 @@ public:
 
         // Checks if we are at the head
         if (temp->prev)
-            temp->prev->next = temp->next; // If we are not it will redd
+            temp->prev->next = temp->next; // If we are not it will redirect the previous node next ptr to the node after the node we are trying to delete which is our current node
         else
-            head = temp->next; 
+            head = temp->next; // If we are at the head it will iterate the head to the next node keeping it current
 
+        // Checks if we are at the tail
         if (temp->next)
-            temp->next->prev = temp->prev;
+            temp->next->prev = temp->prev; // if we are not at the tail it will redirect the next node prev ptr to the node before the node we are trying to delete which is our current node
         else
-            tail = temp->prev; 
+            tail = temp->prev; // If we are at the tail it will iterate the tail to the left of our soon to be deleted node so it actually points to the tail
 
-        delete temp;
+        delete temp; // Deletes the temp node which has the data we are trying to remove
     }
 
     void delete_pos(int pos) {
+        // Checks if the list is empty and exits if it is
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
     
+        // Checks if we are at the front and will call pop_front to delete that node
         if (pos == 1) {
             pop_front();
             return;
         }
     
+        // Creates a Node ptr temp pointing at head to iterate through the list
         Node* temp = head;
     
+        // Starts iterating position and our temp node through the list
         for (int i = 1; i < pos; i++){
+
+            // Checks if our temp node points to a nullptr which would be past our tail out of bounds
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
-                return;
+                return; // Exits program as we are out of bounds
             }
             else
-                temp = temp->next;
+                temp = temp->next; // Iterates our temp node ptr through the list
         }
+
+        // Checks if our temp node ptr is a nullptr
+        // This is done as when we last call "temp = temp->next" we can be moved past the end (nullptr) and have also reached our desired position
+        // This will cause the for loop to end with out temp being checked to be past the end of the list which it is so we do that test here 
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
-    
+
+
         if (!temp->next) {
             pop_back();
             return;
@@ -131,12 +143,17 @@ public:
         delete temp;
     }
 
+    /// @brief puts a new node containing our data v to the end of the list
+    /// @param v the data to be put in the node
     void push_back(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // Creates our new node with our v data in it
+
+        // Checks if the list is empty
+        // You could also do this test with the head if you wanted as they both will return nullptr if the list is empty
         if (!tail)
-            head = tail = newNode;
+            head = tail = newNode; // If the list is empty it will set the tail/head to point to our new node
         else {
-            tail->next = newNode;
+            tail->next = newNode; // When the list is not empty it will set the tail's next ptr ot h
             newNode->prev = tail;
             tail = newNode;
         }
