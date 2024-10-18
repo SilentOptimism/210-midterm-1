@@ -53,30 +53,36 @@ public:
             return; // Exits the program
         }
 
-        // Sets the New nodes next ptr to the next ptr of the current node at the position where we want to insert the node
+        // Sets our new nodes next ptr to the next ptr of the temp node thats at the position where we want to insert the new node
         newNode->next = temp->next;
-        // Sets the newNode to the node at our position next
+        // Sets our new nodes prev ptr to our temp node putting it after the desired position
         newNode->prev = temp;
 
+        // Checks if we are at the end of the list
         if (temp->next)
-            temp->next->prev = newNode;
+            temp->next->prev = newNode; // If we are not it will set the prev ptr of the node after our newNode to our previous node connecting the list from the right side
         else
-            tail = newNode;
-        temp->next = newNode;
+            tail = newNode; // If we are at the end it moves the tail to the newNode to keep it current
+        temp->next = newNode; // Sets the previous node next ptr to our new node reconnecting our list from the left
     }
 
     void delete_val(int value) {
+        // Checks if list is empty if it is returns immediately
         if (!head) return;
 
+        // Creates a temp node to iterate through the list
         Node* temp = head;
         
+        // Checks if the data in the temep is the desired value and if temp has reached the end of the list; meaning is temp a nullptr
         while (temp && temp->data != value)
-            temp = temp->next;
+            temp = temp->next; // Iterates temp
 
+        // Temp being a nullptr means we haven't found the value in the list will return as nothing to delete
         if (!temp) return; 
 
+        // Checks if we are at the head
         if (temp->prev)
-            temp->prev->next = temp->next;
+            temp->prev->next = temp->next; // If we are not it will redd
         else
             head = temp->next; 
 
