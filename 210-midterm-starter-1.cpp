@@ -7,13 +7,13 @@ class DoublyLinkedList {
 private:
     struct Node {
         int data;
-        Node* prev;
+        Node* prev; 
         Node* next;
 
         /// @brief Node constructor takes the data and constructs the node
         /// @param val the nodes data
-        /// @param p the previous ptr (automatically set to nullptr)
-        /// @param n 
+        /// @param p A ptr to the previous node (automatically set to nullptr)
+        /// @param n A ptr to the next node (automatically set to nullptr)
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
@@ -27,6 +27,7 @@ private:
 public:
     /// @brief creates the list with head/tail pointing to a nullptr indicating its empty
     DoublyLinkedList() { head = nullptr; tail = nullptr; } 
+
 
     /// @brief Inserts a node with the given value after the given position
     /// @param value The value node will contain as its data
@@ -128,7 +129,7 @@ public:
             // Checks if our temp node points to a nullptr which would be past our tail out of bounds
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
-                return; // Exits program as we are out of bounds
+                return; // Exits the function as we are out of bounds
             }
             else
                 temp = temp->next; // Iterates our temp node ptr through the list
@@ -139,7 +140,7 @@ public:
         // This will cause the for loop to end with out temp being checked to be past the end of the list which it is so we do that test here 
         if (!temp) {
             cout << "Position doesn't exist." << endl;
-            return; // exits 
+            return; // Exits the functions as we are out of bounds
         }
 
         // Checks if we are before the end of the list
@@ -283,10 +284,45 @@ public:
         }
         cout << endl;
     }
+
+    /// @brief Prints out every other element starting from the first element
+    void every_other_element(){
+        // Creates a node ptr current pointing to the head to iterate through the list
+        Node* current = head;
+
+        // Checks if the list is empty
+        if(!current){
+            cout << "List is empty." << endl;
+            return; // Exits if it is empty
+        }
+
+        // Checks to see if current is valid
+        while(current){
+            cout << current->data << " "; // Prints out currents data
+            current = current->next; // Iterrates current to the next node
+
+            if(current) {current = current->next;} // Checks current exists if it does iterates it to the next node
+        }
+        cout << endl;
+    }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    //cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+
+    DoublyLinkedList list; // Creates a Doubly linked list
+
+    // Fills the new list
+    list.push_back(0);
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+    list.push_back(6);
+
+    list.print(); // Prints the list normally
+    list.every_other_element(); // Prints the list using every_other_element()
 
     
     return 0;
